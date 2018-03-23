@@ -13,7 +13,7 @@
 NAME		=	lem-in
 
 SRC_NAME	=	main.c \
-				
+				fill_list.c \
 
 OBJ_NAME	=	$(SRC:.c=.o)
 SRC_PATH	=	.

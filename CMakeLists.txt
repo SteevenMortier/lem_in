@@ -70,20 +70,6 @@ add_executable(lem_in
         libft/get_next_line.c
         libft/get_next_line.h
         libft/libft.h
-        test/test0
-        test/test1
-        test/test10
-        test/test1000
-        test/test11
-        test/test12
-        test/test13
-        test/test2
-        test/test3
-        test/test4
-        test/test5
-        test/test6
-        test/test7
-        test/test8
-        test/test9
+        lem_in.h
         main.c
         Makefile)
