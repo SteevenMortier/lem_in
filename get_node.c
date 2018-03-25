@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_min_tnl_number.c                               :+:      :+:    :+:   */
+/*   get_node.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smortier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/25 11:15:29 by smortier          #+#    #+#             */
-/*   Updated: 2018/03/25 11:15:31 by smortier         ###   ########.fr       */
+/*   Created: 2018/03/25 11:16:34 by smortier          #+#    #+#             */
+/*   Updated: 2018/03/25 11:16:36 by smortier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void					get_min_tnl_number(t_parameters *params)
+t_nodes		*get_node(t_parameters *params, char *name)
 {
 	t_nodes		*tmp;
 
-	params->min_tnl_nbr = 4242424;
 	tmp = params->node;
 	while (tmp)
 	{
-		if (ft_strstr(params->start_name, tmp->name))
-			params->min_tnl_nbr = (params->min_tnl_nbr >= tmp->nbr_links) ?
-								tmp->nbr_links : params->min_tnl_nbr;
-		if (ft_strstr(params->end_name, tmp->name))
-			params->min_tnl_nbr = (params->min_tnl_nbr >= tmp->nbr_links) ?
-								  tmp->nbr_links : params->min_tnl_nbr;
+		if (ft_strstr(tmp->name, name))
+			return (tmp);
 		tmp = tmp->nxt;
 	}
+	return (NULL);
 }

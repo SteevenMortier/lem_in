@@ -6,7 +6,7 @@
 #    By: smortier <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 23:18:45 by smortier          #+#    #+#              #
-#    Updated: 2018/01/24 23:27:26 by smortier         ###   ########.fr        #
+#    Updated: 2018/03/25 11:15:45 by smortier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ NAME		=	lem-in
 SRC_NAME	=	main.c \
 				fill_list.c \
 				get_min_tnl_number.c \
+				get_node.c \
+				get_tunnels.c \
 
 OBJ_NAME	=	$(SRC:.c=.o)
 SRC_PATH	=	.

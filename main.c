@@ -1,11 +1,14 @@
-////HEADER
-////HEADER
-////HEADER
-////HEADER
-////HEADER
-////HEADER
-////HEADER
-////HEADER
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smortier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/25 11:15:04 by smortier          #+#    #+#             */
+/*   Updated: 2018/03/25 11:15:06 by smortier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "lem_in.h"
 
@@ -113,7 +116,8 @@ int		main(void)
 	}
 	fill_list(&params);
 	get_min_tnl_number(&params);
-	//////////////debug fill_list
+	get_tunnels(&params);
+
 	tmp = params.node;
 	while (tmp)
 	{
@@ -127,7 +131,6 @@ int		main(void)
 	printf("\e[38;5;226mend   : [%s]\e[0m\n", params.end_name);
 	printf("\e[38;5;226mMinimum of tunnel : [%d]\e[0m\n", params.min_tnl_nbr);
 
-	/////////////fin debug
 	/////LEAKS
 	index = -1;
 	while (++index < params.file_line)
