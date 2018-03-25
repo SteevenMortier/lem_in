@@ -37,6 +37,7 @@ typedef struct			s_parameters
 	int		nbr_ants;
 	int		start_line;
 	int		end_line;
+	int		min_tnl_nbr;
 	int		file_line;
 	char	*start_name;
 	char	*end_name;
@@ -45,5 +46,7 @@ typedef struct			s_parameters
 }						t_parameters;
 
 void					fill_list(t_parameters *params);
+
+void					get_min_tnl_number(t_parameters *params);
 
 #endif

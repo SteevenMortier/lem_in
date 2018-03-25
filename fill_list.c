@@ -20,7 +20,7 @@ t_nodes		*ft_new_node(char *x, char *y, char *name)
 		return (NULL);
 	new_node->pos_x = ft_atoi(x);
 	new_node->pos_y = ft_atoi(y);
-	new_node->name = name;
+	new_node->name = ft_strdup(name);
 	new_node->prev = NULL;
 	new_node->nxt = NULL;
 	return (new_node);
@@ -38,7 +38,7 @@ t_nodes		*create_list(t_parameters *params, char *line)
 		ft_strdel(&split[0]);
 		ft_strdel(&split[1]);
 		ft_strdel(&split[2]);
-//		ft_memdel((void **)&split);
+		ft_memdel((void **)&split);
 		return (temp);
 	}
 	else
@@ -50,9 +50,45 @@ t_nodes		*create_list(t_parameters *params, char *line)
 		ft_strdel(&split[0]);
 		ft_strdel(&split[1]);
 		ft_strdel(&split[2]);
-//		ft_memdel((void **)&split);
+		ft_memdel((void **)&split);
 		return (params->node);
 	}
+}
+
+void		add_links(t_parameters *params, char *line)
+{
+	char	**split;
+	int		index;
+	int		placed;
+	t_nodes	*tmp;
+
+	split = ft_strsplit(line, '-');
+	tmp = params->node;
+	while (tmp)
+	{
+		if (ft_strstr(split[0], tmp->name))
+		{
+			tmp->nbr_links += 1;
+			tmp->links = ft_realloc((void **)&(tmp->links),
+							ft_strlen(tmp->links),
+							ft_strlen(tmp->links) + ft_strlen(split[1]) + 1);
+			ft_strcat(tmp->links, split[1]);
+			ft_strcat(tmp->links, " ");
+		}
+		if (ft_strstr(split[1], tmp->name))
+		{
+			tmp->nbr_links += 1;
+			tmp->links = ft_realloc((void **)&(tmp->links),
+									ft_strlen(tmp->links),
+									ft_strlen(tmp->links) + ft_strlen(split[0]) + 1);
+			ft_strcat(tmp->links, split[0]);
+			ft_strcat(tmp->links, " ");
+		}
+		tmp = tmp->nxt;
+	}
+	ft_strdel(&split[0]);
+	ft_strdel(&split[1]);
+	ft_memdel((void **)&split);
 }
 
 void		fill_list(t_parameters *params)
@@ -64,10 +100,15 @@ void		fill_list(t_parameters *params)
 	index = 0;
 	while (params->file[++index])
 	{
-		if ((params->file[index] && strchr(params->file[index], ' ')))
-		{
+		if (strchr(params->file[index], ' ') &&
+				!ft_strstr(params->file[index], "##"))
 			params->node = create_list(params, params->file[index]);
-//			printf("\e[31m[%s]\e[0m\n", params->file[index]);
-		}
+	}
+	index = 0;
+	while (params->file[++index])
+	{
+		if (ft_strchr(params->file[index], '-') &&
+				!ft_strstr(params->file[index], "##"))
+			add_links(params, params->file[index]);
 	}
 }

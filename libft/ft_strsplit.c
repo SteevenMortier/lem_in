@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
 char	**ft_strsplit(char const *s, char c)
 {
@@ -32,9 +32,9 @@ char	**ft_strsplit(char const *s, char c)
 			s++;
 		if (*s != c)
 		{
-			tab[i] = ft_strsub(s, 0, ft_strclen(s, c));
+			tab[i] = ft_strsub(s, 0, (size_t)ft_strclen(s, c));
 			i++;
-			while (*s != c)
+			while (*s != c && *s)
 				s++;
 		}
 	}

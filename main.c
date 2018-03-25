@@ -56,11 +56,9 @@ int		parsing_holder(t_parameters *params)
 	{
 		if (params->file[index][0] == '#' && ft_strstr(params->file[index], "start"))
 		{
-			if (params->file[index + 1] && params->file[index + 1][0] == '#')
-			{
-				ft_memdel((void **)&split);
+			if (params->file[index + 1] &&
+					!ft_strchr(params->file[index + 1], ' '))
 				return (0);
-			}
 			else
 			{
 				split = ft_strsplit(params->file[index + 1], ' ');
@@ -68,15 +66,15 @@ int		parsing_holder(t_parameters *params)
 				ft_strdel(&split[1]);
 				ft_strdel(&split[2]);
 				ft_memdel((void **)&split);
+				if (!params->start_name)
+					return (0);
 			}
 		}
 		if (params->file[index][0] == '#' && ft_strstr(params->file[index], "end"))
 		{
-			if (params->file[index + 1] && params->file[index + 1][0] == '#')
-			{
-				ft_memdel((void **)&split);
+			if (params->file[index + 1] &&
+					!ft_strchr(params->file[index + 1], ' '))
 				return (0);
-			}
 			else
 			{
 				split = ft_strsplit(params->file[index + 1], ' ');
@@ -84,6 +82,8 @@ int		parsing_holder(t_parameters *params)
 				ft_strdel(&split[1]);
 				ft_strdel(&split[2]);
 				ft_memdel((void **)&split);
+				if (!params->end_name)
+					return (0);
 			}
 		}
 	}
@@ -95,6 +95,7 @@ int		main(void)
 	char			*line;
 	t_parameters	params;
 	int				index;
+	t_nodes			*tmp;
 
 	if (!(params.file = (char **)ft_memalloc(sizeof(char *) * 1)))
 		return (0);
@@ -102,16 +103,31 @@ int		main(void)
 	params.file_line = 1;
 	while (get_next_line(0, &line) > 0)
 	{
-//		printf("\e[033mline = [%s]\e[0m\n", line);
 		clear_file(&params, line);
 		ft_strdel(&line);
 	}
-	if (!parsing_holder(&params))
+	if (!parsing_holder(&params) || !params.start_name || !params.end_name)
 	{
 		ft_putendl("Error");
 		return (0);
 	}
 	fill_list(&params);
+	get_min_tnl_number(&params);
+	//////////////debug fill_list
+	tmp = params.node;
+	while (tmp)
+	{
+		if (tmp->links)
+			tmp->links[ft_strlen(tmp->links) - 1] = 0;
+		printf("\e[38;5;87mNode = [%s], links = [%s], nbr_links = [%d] \e[0m\n",
+			tmp->name, tmp->links, tmp->nbr_links);
+		tmp = tmp->nxt;
+	}
+	printf("\e[38;5;226mStart : [%s]\e[0m\n", params.start_name);
+	printf("\e[38;5;226mend   : [%s]\e[0m\n", params.end_name);
+	printf("\e[38;5;226mMinimum of tunnel : [%d]\e[0m\n", params.min_tnl_nbr);
+
+	/////////////fin debug
 	/////LEAKS
 	index = -1;
 	while (++index < params.file_line)
@@ -119,8 +135,8 @@ int		main(void)
 	ft_memdel((void **)&params.start_name);
 	ft_memdel((void **)&params.end_name);
 	ft_memdel((void **)&params.file);
-	while (params.node->nxt)
 	while (1)
 		;
+	//on leaks pas si on laisse le pointeur de la liste au debut hehe
 	/////LEAKS
 }

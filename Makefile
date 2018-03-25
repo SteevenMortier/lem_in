@@ -14,6 +14,7 @@ NAME		=	lem-in
 
 SRC_NAME	=	main.c \
 				fill_list.c \
+				get_min_tnl_number.c \
 
 OBJ_NAME	=	$(SRC:.c=.o)
 SRC_PATH	=	.
