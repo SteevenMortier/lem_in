@@ -132,14 +132,14 @@ int		main(void)
 	printf("\e[38;5;226mMinimum of tunnel : [%d]\e[0m\n", params.min_tnl_nbr);
 
 	/////LEAKS
-	index = -1;
+	/*index = -1;
 	while (++index < params.file_line)
 		ft_strdel(&params.file[index]);
 	ft_memdel((void **)&params.start_name);
 	ft_memdel((void **)&params.end_name);
-	ft_memdel((void **)&params.file);
-	while (1)
-		;
+	ft_memdel((void **)&params.file);*/
+//	while (1)
+//		;
 	//on leaks pas si on laisse le pointeur de la liste au debut hehe
 	/////LEAKS
 }
