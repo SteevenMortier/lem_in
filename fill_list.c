@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: smortier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/23 12:02:22 by smortier          #+#    #+#             */
-/*   Updated: 2018/03/25 11:15:18 by smortier         ###   ########.fr       */
+/*   Created: 2018/04/15 16:07:14 by smortier          #+#    #+#             */
+/*   Updated: 2018/04/15 16:07:17 by smortier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_nodes		*ft_new_node(char *x, char *y, char *name)
+t_nodes		*ft_new_node(char *x, char *y, char *name, int id)
 {
 	t_nodes		*new_node;
 
@@ -20,13 +20,13 @@ t_nodes		*ft_new_node(char *x, char *y, char *name)
 		return (NULL);
 	new_node->pos_x = ft_atoi(x);
 	new_node->pos_y = ft_atoi(y);
+	new_node->id = id;
 	new_node->name = ft_strdup(name);
-	new_node->prev = NULL;
 	new_node->nxt = NULL;
 	return (new_node);
 }
 
-t_nodes		*create_list(t_parameters *params, char *line)
+t_nodes		*create_list(t_parameters *params, char *line, int id)
 {
 	t_nodes		*temp;
 	char		**split;
@@ -34,7 +34,7 @@ t_nodes		*create_list(t_parameters *params, char *line)
 	split = ft_strsplit(line, ' ');
 	if (params->node == NULL)
 	{
-		temp = ft_new_node(split[1], split[2], split[0]);
+		temp = ft_new_node(split[1], split[2], split[0], id);
 		ft_strdel(&split[0]);
 		ft_strdel(&split[1]);
 		ft_strdel(&split[2]);
@@ -46,7 +46,7 @@ t_nodes		*create_list(t_parameters *params, char *line)
 		temp = params->node;
 		while (temp->nxt)
 			temp = temp->nxt;
-		temp->nxt = ft_new_node(split[1], split[2], split[0]);
+		temp->nxt = ft_new_node(split[1], split[2], split[0], id);
 		ft_strdel(&split[0]);
 		ft_strdel(&split[1]);
 		ft_strdel(&split[2]);
@@ -55,60 +55,24 @@ t_nodes		*create_list(t_parameters *params, char *line)
 	}
 }
 
-void		add_links(t_parameters *params, char *line)
-{
-	char	**split;
-	int		index;
-	int		placed;
-	t_nodes	*tmp;
-
-	split = ft_strsplit(line, '-');
-	tmp = params->node;
-	while (tmp)
-	{
-		if (ft_strstr(split[0], tmp->name))
-		{
-			tmp->nbr_links += 1;
-			tmp->links = ft_realloc((void **)&(tmp->links),
-							ft_strlen(tmp->links),
-							ft_strlen(tmp->links) + ft_strlen(split[1]) + 1);
-			ft_strcat(tmp->links, split[1]);
-			ft_strcat(tmp->links, " ");
-		}
-		if (ft_strstr(split[1], tmp->name))
-		{
-			tmp->nbr_links += 1;
-			tmp->links = ft_realloc((void **)&(tmp->links),
-									ft_strlen(tmp->links),
-									ft_strlen(tmp->links) + ft_strlen(split[0]) + 1);
-			ft_strcat(tmp->links, split[0]);
-			ft_strcat(tmp->links, " ");
-		}
-		tmp = tmp->nxt;
-	}
-	ft_strdel(&split[0]);
-	ft_strdel(&split[1]);
-	ft_memdel((void **)&split);
-}
-
-void		fill_list(t_parameters *params)
+void	fill_list(t_parameters *params)
 {
 	int		index;
-	int		index_leaks;
 	char	**split;
 
 	index = 0;
 	while (params->file[++index])
 	{
-		if (strchr(params->file[index], ' ') &&
-				!ft_strstr(params->file[index], "##"))
-			params->node = create_list(params, params->file[index]);
+		split = ft_strsplit(params->file[index], ' ');
+		if (split[1])
+		{
+			printf("\e[33m[%s] \n\e[0m", params->file[index]);
+			params->node = create_list(params, params->file[index], index - 1);
+		}
 	}
-	index = 0;
-	while (params->file[++index])
+	while (params->node)
 	{
-		if (ft_strchr(params->file[index], '-') &&
-				!ft_strstr(params->file[index], "##"))
-			add_links(params, params->file[index]);
+		printf("ID = [%d], Name = [%s]\n", params->node->id, params->node->name);
+		params->node = params->node->nxt;
 	}
 }

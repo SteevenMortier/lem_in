@@ -17,7 +17,6 @@ void		clear_file(t_parameters *params, char *line)
 	char		**tmp;
 	int			index;
 
-	index = -1;
 	if (!line)
 		return ;
 	if ((ft_strchr(line, '#') && !ft_strstr(line, "##")) || ft_strstr(line,
@@ -98,7 +97,6 @@ int		main(void)
 	char			*line;
 	t_parameters	params;
 	int				index;
-	t_nodes			*tmp;
 
 	if (!(params.file = (char **)ft_memalloc(sizeof(char *) * 1)))
 		return (0);
@@ -107,6 +105,7 @@ int		main(void)
 	while (get_next_line(0, &line) > 0)
 	{
 		clear_file(&params, line);
+		ft_putendl(line);
 		ft_strdel(&line);
 	}
 	if (!parsing_holder(&params) || !params.start_name || !params.end_name)
@@ -115,22 +114,17 @@ int		main(void)
 		return (0);
 	}
 	fill_list(&params);
-	get_min_tnl_number(&params);
-	get_tunnels(&params);
-
-	tmp = params.node;
-	while (tmp)
+	///////DEBUG
+	printf("\e[32mfourmis : [%d]\n\e[0m", params.nbr_ants);
+	printf("\e[32ms_name : [%s]\n\e[0m", params.start_name);
+	printf("\e[32me_name : [%s]\n\e[0m", params.end_name);
+	printf("\e[32mfile_line : [%d]\n\e[0m", params.file_line);
+	while (*params.file)
 	{
-		if (tmp->links)
-			tmp->links[ft_strlen(tmp->links) - 1] = 0;
-		printf("\e[38;5;87mNode = [%s], links = [%s], nbr_links = [%d] \e[0m\n",
-			tmp->name, tmp->links, tmp->nbr_links);
-		tmp = tmp->nxt;
+		printf("\e[31m[%s]\n\e[0m", *(params.file));
+		params.file++;
 	}
-	printf("\e[38;5;226mStart : [%s]\e[0m\n", params.start_name);
-	printf("\e[38;5;226mend   : [%s]\e[0m\n", params.end_name);
-	printf("\e[38;5;226mMinimum of tunnel : [%d]\e[0m\n", params.min_tnl_nbr);
-
+	///////FIN DEBUG
 	/////LEAKS
 	/*index = -1;
 	while (++index < params.file_line)
