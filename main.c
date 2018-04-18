@@ -49,11 +49,11 @@ int		parsing_holder(t_parameters *params)
 	int			index;
 	char		**split;
 
-	index = -1;
-	if (params->file[0] && ft_isdigit(params->file[0][0]))
+	if (params->file[0])
 		params->nbr_ants = ft_atoi(params->file[0]);
 	else
 		return (0);
+	index = 0;
 	while (params->file[++index])
 	{
 		if (params->file[index][0] == '#' && ft_strstr(params->file[index], "start"))
@@ -113,27 +113,13 @@ int		main(void)
 		ft_putendl("Error");
 		return (0);
 	}
-	fill_list(&params);
+	fill_matrice(&params, fill_list(&params));
+	resolve_tnl(&params);
 	///////DEBUG
 	printf("\e[32mfourmis : [%d]\n\e[0m", params.nbr_ants);
 	printf("\e[32ms_name : [%s]\n\e[0m", params.start_name);
 	printf("\e[32me_name : [%s]\n\e[0m", params.end_name);
 	printf("\e[32mfile_line : [%d]\n\e[0m", params.file_line);
-	while (*params.file)
-	{
-		printf("\e[31m[%s]\n\e[0m", *(params.file));
-		params.file++;
-	}
 	///////FIN DEBUG
-	/////LEAKS
-	/*index = -1;
-	while (++index < params.file_line)
-		ft_strdel(&params.file[index]);
-	ft_memdel((void **)&params.start_name);
-	ft_memdel((void **)&params.end_name);
-	ft_memdel((void **)&params.file);*/
-//	while (1)
-//		;
-	//on leaks pas si on laisse le pointeur de la liste au debut hehe
 	/////LEAKS
 }

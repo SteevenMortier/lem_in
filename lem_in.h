@@ -24,28 +24,31 @@
 
 # include <unistd.h>
 
-#define INFINI 42424242
-
-typedef struct			s_pile
-{
-	int				parent;
-	struct s_pile	*bgn;
-	struct s_pile	*end;
-}
-						t_pile;
+#define INF 42424242
 
 typedef struct			s_nodes
 {
 	int				id;
+	int				shots;
 	char			*name;
 	int				pos_x;
 	int				pos_y;
 	struct s_nodes	*nxt;
+	struct s_nodes	*nxt_mat;
 }						t_nodes;
+
+typedef struct			s_pile
+{
+	int				parent;
+	t_nodes	*bgn;
+	t_nodes	*end;
+}
+		t_pile;
 
 typedef struct			s_parameters
 {
 	int			nbr_ants;
+	int			**matrice;
 	int			nbr_node;
 	int			start_line;
 	int			end_line;
@@ -54,10 +57,17 @@ typedef struct			s_parameters
 	char		*end_name;
 	char		**file;
 	t_nodes		*node;
+	t_pile		*pile;
 }						t_parameters;
 
 t_nodes		*get_node(t_parameters *params, char *name);
 
-void		fill_list(t_parameters *params);
+t_nodes		*get_node_by_id(t_parameters *params, int id_tf);
+
+int		fill_list(t_parameters *params);
+
+void	fill_matrice(t_parameters *params, int index);
+
+void	resolve_tnl(t_parameters *params);
 
 #endif

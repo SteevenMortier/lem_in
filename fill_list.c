@@ -23,6 +23,7 @@ t_nodes		*ft_new_node(char *x, char *y, char *name, int id)
 	new_node->id = id;
 	new_node->name = ft_strdup(name);
 	new_node->nxt = NULL;
+	new_node->nxt_mat = NULL;
 	return (new_node);
 }
 
@@ -55,24 +56,48 @@ t_nodes		*create_list(t_parameters *params, char *line, int id)
 	}
 }
 
-void	fill_list(t_parameters *params)
+void	init_matrice(t_parameters *params, int nbr_nodes)
+{
+	int		index_x;
+	int		index_y;
+
+	if (!(params->matrice = ft_memalloc(sizeof(int *) * nbr_nodes)))
+		return ;
+	index_x = -1;
+	while (++index_x < nbr_nodes)
+	{
+		if (!(params->matrice[index_x] =
+					ft_memalloc(sizeof(int) * nbr_nodes)))
+			return ;
+	}
+	params->nbr_node = nbr_nodes;
+}
+
+int		fill_list(t_parameters *params)
 {
 	int		index;
+	int		leaks_index;
+	int		nbr_nodes;
 	char	**split;
 
 	index = 0;
+	nbr_nodes = 0;
 	while (params->file[++index])
 	{
 		split = ft_strsplit(params->file[index], ' ');
-		if (split[1])
+		if (split[1] && split[2])
 		{
-			printf("\e[33m[%s] \n\e[0m", params->file[index]);
-			params->node = create_list(params, params->file[index], index - 1);
+//			printf("\e[33m[%s] \n\e[0m", params->file[index]);
+			params->node = create_list(params, params->file[index], nbr_nodes);
+			nbr_nodes += 1;
 		}
+		else if (!ft_strstr(params->file[index], "##"))
+			break;
+		leaks_index = -1;
+		while (split[++leaks_index])
+			ft_strdel(&split[leaks_index]);
+		ft_memdel((void **)&split);
 	}
-	while (params->node)
-	{
-		printf("ID = [%d], Name = [%s]\n", params->node->id, params->node->name);
-		params->node = params->node->nxt;
-	}
+	init_matrice(params, nbr_nodes);
+	return (index);
 }

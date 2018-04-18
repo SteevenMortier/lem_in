@@ -15,6 +15,8 @@ NAME		=	lem-in
 SRC_NAME	=	main.c \
 				get_node.c \
 				fill_list.c \
+				fill_matrice.c \
+				resolve_tnl.c \
 
 OBJ_NAME	=	$(SRC:.c=.o)
 SRC_PATH	=	.
