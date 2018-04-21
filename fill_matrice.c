@@ -47,14 +47,11 @@ void	fill_matrice(t_parameters *params, int index)
 
 	while (params->file[index])
 	{
-		leaks_split = 0;
+		leaks_split = -1;
 		split = ft_strsplit(params->file[index], '-');
 		put_links(params, split[0], split[1]);
-		while (split[leaks_split])
-		{
+		while (split[++leaks_split])
 			ft_strdel(&split[leaks_split]);
-			leaks_split += 1;
-		}
 		ft_memdel((void **)&split);
 		index++;
 	}

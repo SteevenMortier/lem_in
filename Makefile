@@ -17,6 +17,10 @@ SRC_NAME	=	main.c \
 				fill_list.c \
 				fill_matrice.c \
 				resolve_tnl.c \
+				leaks_holder.c \
+				reset_matrice.c \
+				check_if_needed.c \
+				ants_way.c \
 
 OBJ_NAME	=	$(SRC:.c=.o)
 SRC_PATH	=	.

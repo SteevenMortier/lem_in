@@ -31,14 +31,15 @@ t_nodes		*create_list(t_parameters *params, char *line, int id)
 {
 	t_nodes		*temp;
 	char		**split;
+	int			index;
 
 	split = ft_strsplit(line, ' ');
 	if (params->node == NULL)
 	{
 		temp = ft_new_node(split[1], split[2], split[0], id);
-		ft_strdel(&split[0]);
-		ft_strdel(&split[1]);
-		ft_strdel(&split[2]);
+		index = -1;
+		while (split[++index])
+			ft_strdel(&split[index]);
 		ft_memdel((void **)&split);
 		return (temp);
 	}
@@ -48,9 +49,9 @@ t_nodes		*create_list(t_parameters *params, char *line, int id)
 		while (temp->nxt)
 			temp = temp->nxt;
 		temp->nxt = ft_new_node(split[1], split[2], split[0], id);
-		ft_strdel(&split[0]);
-		ft_strdel(&split[1]);
-		ft_strdel(&split[2]);
+		index = -1;
+		while (split[++index])
+			ft_strdel(&split[index]);
 		ft_memdel((void **)&split);
 		return (params->node);
 	}
@@ -87,12 +88,17 @@ int		fill_list(t_parameters *params)
 		split = ft_strsplit(params->file[index], ' ');
 		if (split[1] && split[2])
 		{
-//			printf("\e[33m[%s] \n\e[0m", params->file[index]);
 			params->node = create_list(params, params->file[index], nbr_nodes);
 			nbr_nodes += 1;
 		}
 		else if (!ft_strstr(params->file[index], "##"))
+		{
+			leaks_index = -1;
+			while (split[++leaks_index])
+				ft_strdel(&split[leaks_index]);
+			ft_memdel((void **)&split);
 			break;
+		}
 		leaks_index = -1;
 		while (split[++leaks_index])
 			ft_strdel(&split[leaks_index]);

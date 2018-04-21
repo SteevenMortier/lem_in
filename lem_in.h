@@ -45,9 +45,18 @@ typedef struct			s_pile
 }
 		t_pile;
 
+typedef struct			s_tunnel
+{
+	int				id;
+	int				lgt;
+	int				*path;
+	struct s_tunnel	*nxt;
+}						t_tunnel;
+
 typedef struct			s_parameters
 {
 	int			nbr_ants;
+	int			nbr_tnl;
 	int			**matrice;
 	int			nbr_node;
 	int			start_line;
@@ -58,6 +67,7 @@ typedef struct			s_parameters
 	char		**file;
 	t_nodes		*node;
 	t_pile		*pile;
+	t_tunnel	*tnl;
 }						t_parameters;
 
 t_nodes		*get_node(t_parameters *params, char *name);
@@ -69,5 +79,15 @@ int		fill_list(t_parameters *params);
 void	fill_matrice(t_parameters *params, int index);
 
 void	resolve_tnl(t_parameters *params);
+
+void	leaks_holder(t_parameters *params);
+
+void	reset_matrice(t_parameters *params, int *tnl, int for_tnl);
+
+int		check_if_needed(t_parameters *params);
+
+void	ants_way(t_parameters *params);
+
+t_tunnel	*create_tunnel(t_parameters *params, int lenhgt, int *tnl);
 
 #endif

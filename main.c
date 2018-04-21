@@ -27,7 +27,7 @@ void		clear_file(t_parameters *params, char *line)
 		return ;
 	index = -1;
 	params->file_line += 1;
-	if (!(tmp = ft_memalloc(sizeof(char *) * params->file_line)))
+	if (!(tmp = (char **)ft_memalloc(sizeof(char *) * params->file_line)))
 		return ;
 	if (params->file)
 	{
@@ -53,6 +53,11 @@ int		parsing_holder(t_parameters *params)
 		params->nbr_ants = ft_atoi(params->file[0]);
 	else
 		return (0);
+	if (!params->nbr_ants)
+	{
+		ft_putstr("Error");
+		exit(1);
+	}
 	index = 0;
 	while (params->file[++index])
 	{
@@ -96,8 +101,9 @@ int		main(void)
 {
 	char			*line;
 	t_parameters	params;
-	int				index;
 
+	params.nbr_tnl = 0;
+	params.tnl = NULL;
 	if (!(params.file = (char **)ft_memalloc(sizeof(char *) * 1)))
 		return (0);
 	params.file[0] = NULL;
@@ -115,6 +121,7 @@ int		main(void)
 	}
 	fill_matrice(&params, fill_list(&params));
 	resolve_tnl(&params);
+	ants_way(&params);
 	///////DEBUG
 	printf("\e[32mfourmis : [%d]\n\e[0m", params.nbr_ants);
 	printf("\e[32ms_name : [%s]\n\e[0m", params.start_name);
@@ -122,4 +129,7 @@ int		main(void)
 	printf("\e[32mfile_line : [%d]\n\e[0m", params.file_line);
 	///////FIN DEBUG
 	/////LEAKS
+	leaks_holder(&params);
+//	while (1)
+//		;
 }
