@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   reset_matrice.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smortier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/04/22 11:43:06 by smortier          #+#    #+#             */
+/*   Updated: 2018/04/22 11:43:08 by smortier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
 t_tunnel	*new_tunnel(t_parameters *params, int lenght, int *tnl)
@@ -41,25 +53,10 @@ t_tunnel	*create_tunnel(t_parameters *params, int lenhgt, int *tnl)
 	}
 }
 
-void	reset_matrice(t_parameters *params, int *tnl, int for_tnl)
+void		delete_in_matrice(t_parameters *params, int *tnl, int for_tnl)
 {
-	int		x;
 	int		y;
 
-	params->tnl = create_tunnel(params, for_tnl + 1, tnl);
-	x = -1;
-	while (++x < params->nbr_node)
-	{
-		y  = -1;
-		while (++y < params->nbr_node)
-		{
-			if (params->matrice[x][y])
-			{
-				params->matrice[x][y] = INF;
-				params->matrice[y][x] = INF;
-			}
-		}
-	}
 	while (for_tnl >= 0)
 	{
 		y = -1;
@@ -72,8 +69,28 @@ void	reset_matrice(t_parameters *params, int *tnl, int for_tnl)
 				params->matrice[y][tnl[for_tnl]] = 0;
 			}
 		}
-//		printf("\e[32m%s \e[0m", get_node_by_id(params, tnl[for_tnl])->name);
-		//ca nous le donne dans lordre la ptete faire un liste de tnl ici
 		for_tnl -= 1;
 	}
+}
+
+void		reset_matrice(t_parameters *params, int *tnl, int for_tnl)
+{
+	int		x;
+	int		y;
+
+	params->tnl = create_tunnel(params, for_tnl + 1, tnl);
+	x = -1;
+	while (++x < params->nbr_node)
+	{
+		y = -1;
+		while (++y < params->nbr_node)
+		{
+			if (params->matrice[x][y])
+			{
+				params->matrice[x][y] = INF;
+				params->matrice[y][x] = INF;
+			}
+		}
+	}
+	delete_in_matrice(params, tnl, for_tnl);
 }

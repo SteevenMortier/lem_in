@@ -23,7 +23,7 @@ t_nodes		*get_node(t_parameters *params, char *name)
 			return (tmp);
 		tmp = tmp->nxt;
 	}
-	return NULL;
+	return (NULL);
 }
 
 t_nodes		*get_node_by_id(t_parameters *params, int id_tf)
@@ -37,5 +37,5 @@ t_nodes		*get_node_by_id(t_parameters *params, int id_tf)
 			return (tmp);
 		tmp = tmp->nxt;
 	}
-	return NULL;
+	return (NULL);
 }

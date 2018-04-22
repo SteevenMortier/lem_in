@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fill_matrice.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smortier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/04/22 08:44:58 by smortier          #+#    #+#             */
+/*   Updated: 2018/04/22 08:44:58 by smortier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
 void	check_matrice(t_parameters *params)
@@ -12,11 +24,9 @@ void	check_matrice(t_parameters *params)
 		y = -1;
 		nbr_links = 0;
 		while (++y < params->nbr_node)
-		{
-			if (params->matrice[x][y] == INF)
-				nbr_links += 1;
-		}
-		if (nbr_links < 2 && ft_strcmp(get_node_by_id(params, x)->name, params->start_name) &&
+			nbr_links += (params->matrice[x][y] == INF) ? 1 : 0;
+		if (nbr_links < 2 && ft_strcmp(get_node_by_id(params, x)->name,
+				params->start_name) &&
 				ft_strcmp(get_node_by_id(params, x)->name, params->end_name))
 		{
 			y = -1;
@@ -42,8 +52,8 @@ void	put_links(t_parameters *params, char *x, char *y)
 
 void	fill_matrice(t_parameters *params, int index)
 {
-	char **split;
-	int leaks_split;
+	char	**split;
+	int		leaks_split;
 
 	while (params->file[index])
 	{
@@ -56,9 +66,4 @@ void	fill_matrice(t_parameters *params, int index)
 		index++;
 	}
 	check_matrice(params);
-//	while (params->node)
-//	{
-//		printf("Node = [%s], id = [%d]\n", params->node->name, params->node->id);
-//		params->node = params->node->nxt;
-//	}
 }

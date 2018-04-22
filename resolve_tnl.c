@@ -1,10 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   resolve_tnl.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smortier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/04/22 08:40:11 by smortier          #+#    #+#             */
+/*   Updated: 2018/04/22 08:40:13 by smortier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
 t_pile	*init_pile(t_parameters *params)
 {
 	t_pile	*tmp;
+
 	if (!(tmp = (t_pile *)ft_memalloc(sizeof(t_pile))))
-		return NULL;
+		return (NULL);
 	tmp->bgn = get_node(params, params->start_name);
 	tmp->end = get_node(params, params->start_name);
 	return (tmp);
@@ -30,14 +43,14 @@ void	get_chemin(t_parameters *params)
 		current = x;
 	}
 	tnl[for_tnl] = get_node(params, params->start_name)->id;
-	x = -1;
-	while (++x <= for_tnl)
-	{
-		printf("\e[31m%s \e[0m", get_node_by_id(params, tnl[x])->name);
-	}
-	printf("\n");
 	params->nbr_tnl += 1;
 	reset_matrice(params, tnl, for_tnl);
+}
+
+void	for_norm(t_parameters *params, int x, int y)
+{
+	params->matrice[y][x] = 0;
+	params->matrice[x][y] = 1;
 }
 
 void	calcul_matrice(t_parameters *params)
@@ -56,10 +69,10 @@ void	calcul_matrice(t_parameters *params)
 			{
 				params->pile->end->nxt_mat = get_node_by_id(params, y);
 				params->pile->end = get_node_by_id(params, y);
-				params->matrice[y][x] = 0;
-				params->matrice[x][y] = 1;
+				for_norm(params, x, y);
 			}
-			if (params->matrice[x][get_node(params, params->end_name)->id] == INF)
+			if (params->matrice[x][get_node(params, params->end_name)->id]
+				== INF)
 				params->pile->bgn = NULL;
 		}
 		if (params->pile->bgn)
@@ -75,6 +88,5 @@ void	resolve_tnl(t_parameters *params)
 	{
 		calcul_matrice(params);
 		get_chemin(params);
-		printf("\n");
 	}
 }

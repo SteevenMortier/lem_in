@@ -97,6 +97,24 @@ int		parsing_holder(t_parameters *params)
 	return (1);
 }
 
+void	check_line(char *line)
+{
+	int		index;
+
+	index = -1;
+	if (!ft_strchr(line, '#'))
+	{
+		while (line[++index])
+		{
+			if (!ft_isascii(line[index]))
+			{
+				ft_putendl("Error");
+				exit (1);
+			}
+		}
+	}
+}
+
 int		main(void)
 {
 	char			*line;
@@ -110,6 +128,7 @@ int		main(void)
 	params.file_line = 1;
 	while (get_next_line(0, &line) > 0)
 	{
+		check_line(line);
 		clear_file(&params, line);
 		ft_putendl(line);
 		ft_strdel(&line);
