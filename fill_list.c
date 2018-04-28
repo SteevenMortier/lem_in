@@ -99,5 +99,10 @@ int			fill_list(t_parameters *params)
 		else if (!ft_strstr(params->file[index], "##"))
 			break ;
 	}
+	if (!nbr_nodes)
+	{
+		ft_putendl("ERROR");
+		exit(1);
+	}
 	return (init_matrice(params, nbr_nodes, index));
 }

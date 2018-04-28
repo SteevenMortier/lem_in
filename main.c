@@ -48,14 +48,14 @@ int		parsing_holder(t_parameters *params)
 {
 	int			index;
 	char		**split;
+	int			checker;
 
-	if (params->file[0])
+	checker = 0;
+	if (params->file[0] && !ft_strchr(params->file[0], ' '))
 		params->nbr_ants = ft_atoi(params->file[0]);
-	else
-		return (0);
-	if (!params->nbr_ants)
+	if (params->nbr_ants <= 0)
 	{
-		ft_putstr("Error");
+		ft_putstr("ERROR");
 		exit(1);
 	}
 	index = 0;
@@ -63,6 +63,7 @@ int		parsing_holder(t_parameters *params)
 	{
 		if (params->file[index][0] == '#' && ft_strstr(params->file[index], "start"))
 		{
+			checker += 1;
 			if (params->file[index + 1] &&
 					!ft_strchr(params->file[index + 1], ' '))
 				return (0);
@@ -79,6 +80,7 @@ int		parsing_holder(t_parameters *params)
 		}
 		if (params->file[index][0] == '#' && ft_strstr(params->file[index], "end"))
 		{
+			checker += 1;
 			if (params->file[index + 1] &&
 					!ft_strchr(params->file[index + 1], ' '))
 				return (0);
@@ -94,6 +96,8 @@ int		parsing_holder(t_parameters *params)
 			}
 		}
 	}
+	if (checker != 2)
+		return (0);
 	return (1);
 }
 
@@ -121,6 +125,7 @@ int		main(void)
 	t_parameters	params;
 
 	params.nbr_tnl = 0;
+	params.nbr_ants = 0;
 	params.tnl = NULL;
 	if (!(params.file = (char **)ft_memalloc(sizeof(char *) * 1)))
 		return (0);
@@ -136,18 +141,16 @@ int		main(void)
 	if (!parsing_holder(&params) || !params.start_name || !params.end_name)
 	{
 		ft_putendl("Error");
-		return (0);
+		exit(1);
 	}
 	fill_matrice(&params, fill_list(&params));
 	resolve_tnl(&params);
+	if (!params.nbr_tnl)
+	{
+		ft_putendl("There is no way i can find!");
+		exit(1);
+	}
 	ants_way(&params);
-	///////DEBUG
-	printf("\e[32mfourmis : [%d]\n\e[0m", params.nbr_ants);
-	printf("\e[32ms_name : [%s]\n\e[0m", params.start_name);
-	printf("\e[32me_name : [%s]\n\e[0m", params.end_name);
-	printf("\e[32mfile_line : [%d]\n\e[0m", params.file_line);
-	///////FIN DEBUG
-	/////LEAKS
 	leaks_holder(&params);
 //	while (1)
 //		;

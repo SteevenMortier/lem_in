@@ -59,6 +59,11 @@ void	fill_matrice(t_parameters *params, int index)
 	{
 		leaks_split = -1;
 		split = ft_strsplit(params->file[index], '-');
+		if (!get_node(params, split[0]) || !get_node(params, split[1]))
+		{
+			ft_putendl("ERROR");
+			exit(1);
+		}
 		put_links(params, split[0], split[1]);
 		while (split[++leaks_split])
 			ft_strdel(&split[leaks_split]);
