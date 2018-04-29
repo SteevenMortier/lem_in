@@ -21,6 +21,7 @@ SRC_NAME	=	main.c \
 				reset_matrice.c \
 				check_if_needed.c \
 				ants_way.c \
+				init_tnl.c \
 
 OBJ_NAME	=	$(SRC:.c=.o)
 SRC_PATH	=	.
@@ -56,7 +57,8 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@$(MAKE) -s -C libft
-	@$(CC) $(LDFLAGS) $(LDLIBS) $(OBJ) -o $(NAME)
+	@$(MAKE) -C ft_printf
+	@$(CC) $(LDFLAGS) $(LDLIBS) $(OBJ) -o $(NAME) ft_printf/libftprintf.a
 	@printf "\n"
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
@@ -66,10 +68,12 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 
 clean:
 	@$(MAKE) clean -C libft
+	@$(MAKE) clean -C ft_printf
 	@$(RM) $(OBJ)
 
 fclean: clean
 	@$(MAKE) fclean -C libft
+	@$(MAKE) -C ft_printf fclean
 	@$(RM) $(NAME)
 
 re: fclean all

@@ -59,6 +59,13 @@ void		delete_in_matrice(t_parameters *params, int *tnl, int for_tnl)
 
 	while (for_tnl >= 0)
 	{
+		if (for_tnl == 1)
+		{
+			params->matrice[get_node(params, params->start_name)->id]
+			[get_node(params, params->end_name)->id] = 0;
+			params->matrice[get_node(params, params->end_name)->id]
+			[get_node(params, params->start_name)->id] = 0;
+		}
 		y = -1;
 		while (++y < params->nbr_node)
 		{

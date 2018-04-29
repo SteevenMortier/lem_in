@@ -18,6 +18,8 @@
 
 # include "libft/get_next_line.h"
 
+# include "ft_printf/ft_printf.h"
+
 # include <stdio.h>
 
 # include <stdlib.h>
@@ -103,5 +105,15 @@ int			check_if_needed(t_parameters *params);
 void		ants_way(t_parameters *params);
 
 t_tunnel	*create_tunnel(t_parameters *params, int lenhgt, int *tnl);
+
+char	*get_roomname_by_id(t_parameters *params, int id, int index);
+
+t_antparams	*new_ants(t_parameters *params, int ant_nbr);
+
+t_antparams	*create_ants(t_parameters *params, int ant_nbr);
+
+void	init_tnl(t_parameters *params);
+
+void	get_ants_by_tnl(t_parameters *params);
 
 #endif

@@ -39,3 +39,17 @@ t_nodes		*get_node_by_id(t_parameters *params, int id_tf)
 	}
 	return (NULL);
 }
+
+char		*get_roomname_by_id(t_parameters *params, int id, int index)
+{
+	t_tunnel	*tmp;
+
+	tmp = params->tnl;
+	while (tmp)
+	{
+		if (id == tmp->id)
+			return (get_node_by_id(params, tmp->path[index])->name);
+		tmp = tmp->nxt;
+	}
+	return (NULL);
+}
