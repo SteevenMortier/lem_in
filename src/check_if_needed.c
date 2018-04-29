@@ -6,7 +6,7 @@
 /*   By: smortier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 08:41:50 by smortier          #+#    #+#             */
-/*   Updated: 2018/04/22 08:41:51 by smortier         ###   ########.fr       */
+/*   Updated: 2018/04/29 13:52:02 by smortier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ int		check_if_needed(t_parameters *params)
 		if (params->matrice[x][y])
 			tof_end = 1;
 	}
-	nbr_tnl += (tof_start && tof_end && nbr_tnl < params->nbr_ants) ? 1 : 0;
-	return ((tof_start && tof_end && nbr_tnl < params->nbr_ants) ? 1 : 0);
+	nbr_tnl += (tof_start && tof_end && nbr_tnl <= params->nbr_ants) ? 1 : 0;
+	return ((tof_start && tof_end && nbr_tnl <= params->nbr_ants) ? 1 : 0);
 }

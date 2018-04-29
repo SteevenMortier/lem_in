@@ -6,7 +6,7 @@
 /*   By: smortier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/25 11:15:04 by smortier          #+#    #+#             */
-/*   Updated: 2018/03/25 11:15:06 by smortier         ###   ########.fr       */
+/*   Updated: 2018/04/29 14:03:15 by smortier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		returned_cases(char *line)
 	if ((ft_strchr(line, '#') && !ft_strstr(line, "##")) || ft_strstr(line,
 													"###"))
 		return (0);
-	if (strstr(line, "##") &&
+	if (ft_strstr(line, "##") &&
 		(!ft_strstr(line, "start") && !ft_strstr(line, "end")))
 		return (0);
 	return (1);

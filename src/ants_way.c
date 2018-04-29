@@ -6,7 +6,7 @@
 /*   By: smortier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 08:39:48 by smortier          #+#    #+#             */
-/*   Updated: 2018/04/29 11:39:30 by smortier         ###   ########.fr       */
+/*   Updated: 2018/04/29 13:22:56 by smortier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	final_print(t_parameters *params)
 			ants = ants->nxt;
 		}
 		start++;
-		printf("\n");
+		ft_printf("\n");
 	}
 }
 

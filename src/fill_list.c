@@ -6,7 +6,7 @@
 /*   By: smortier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 16:07:14 by smortier          #+#    #+#             */
-/*   Updated: 2018/04/29 11:37:45 by smortier         ###   ########.fr       */
+/*   Updated: 2018/04/29 14:02:15 by smortier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ t_nodes		*ft_new_node(char *x, char *y, char *name, int id)
 {
 	t_nodes		*new_node;
 
+	if (name && name[0] == 'L')
+	{
+		ft_putendl("Error");
+		exit(1);
+	}
 	if (!(new_node = (t_nodes *)ft_memalloc(sizeof(t_nodes))))
 		return (NULL);
 	new_node->pos_x = ft_atoi(x);

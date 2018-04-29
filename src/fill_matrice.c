@@ -6,7 +6,7 @@
 /*   By: smortier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 08:44:58 by smortier          #+#    #+#             */
-/*   Updated: 2018/04/22 08:44:58 by smortier         ###   ########.fr       */
+/*   Updated: 2018/04/29 13:57:58 by smortier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void	fill_matrice(t_parameters *params, int index)
 	{
 		leaks_split = -1;
 		split = ft_strsplit(params->file[index], '-');
-		if (!get_node(params, split[0]) || !get_node(params, split[1]))
+		if (!get_node(params, split[0]) || !get_node(params, split[1])
+					|| !ft_strcmp(split[0], split[1]))
 		{
 			ft_putendl("ERROR");
 			exit(1);

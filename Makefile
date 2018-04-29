@@ -6,7 +6,7 @@
 #    By: smortier <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 23:18:45 by smortier          #+#    #+#              #
-#    Updated: 2018/04/29 11:36:45 by smortier         ###   ########.fr        #
+#    Updated: 2018/04/29 13:25:10 by smortier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@$(MAKE) -s -C libft
 	@$(MAKE) -C ft_printf
-	@$(CC) $(LDFLAGS) $(LDLIBS) $(OBJ) -o $(NAME) ft_printf/libftprintf.a
+	@$(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) $(OBJ) -o $(NAME) ft_printf/libftprintf.a
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	@mkdir -p $(OBJ_PATH)

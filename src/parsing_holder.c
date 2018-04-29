@@ -6,7 +6,7 @@
 /*   By: smortier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/29 10:54:27 by smortier          #+#    #+#             */
-/*   Updated: 2018/04/29 11:41:09 by smortier         ###   ########.fr       */
+/*   Updated: 2018/04/29 14:02:56 by smortier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int		parsing_holder(t_parameters *params)
 	checker = 0;
 	if (params->file[0] && !ft_strchr(params->file[0], ' '))
 		params->nbr_ants = ft_atoi(params->file[0]);
-	if (params->nbr_ants <= 0)
+	if (params->nbr_ants <= 0 || ft_strcmp(params->file[0],
+				ft_itoa(params->nbr_ants)))
 	{
 		ft_putstr("ERROR");
 		exit(1);
