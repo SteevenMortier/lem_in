@@ -6,7 +6,7 @@
 /*   By: smortier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 16:07:14 by smortier          #+#    #+#             */
-/*   Updated: 2018/04/15 16:07:17 by smortier         ###   ########.fr       */
+/*   Updated: 2018/04/29 11:37:45 by smortier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ t_nodes		*ini_list(t_parameters *params, char *line, int id)
 int			init_matrice(t_parameters *params, int nbr_nodes, int ret)
 {
 	int		index_x;
-	int		index_y;
 
 	if (!(params->matrice = ft_memalloc(sizeof(int *) * nbr_nodes)))
 		return (0);

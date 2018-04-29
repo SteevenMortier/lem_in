@@ -22,7 +22,7 @@
 
 # define BUFF_SIZE 10
 
-int		get_next_line(const int fd, char **line);
+int			get_next_line(const int fd, char **line);
 
 void		*ft_realloc(void **ptr, size_t oldsize, size_t newsize);
 

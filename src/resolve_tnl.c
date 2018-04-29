@@ -6,7 +6,7 @@
 /*   By: smortier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 08:40:11 by smortier          #+#    #+#             */
-/*   Updated: 2018/04/22 08:40:13 by smortier         ###   ########.fr       */
+/*   Updated: 2018/04/29 11:38:11 by smortier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_pile	*init_pile(t_parameters *params)
 void	get_chemin(t_parameters *params)
 {
 	int		x;
-	int		y;
 	int		current;
 	int		for_tnl;
 	int		tnl[10000];

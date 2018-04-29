@@ -12,18 +12,25 @@
 
 #include "lem_in.h"
 
-void		clear_file(t_parameters *params, char *line)
+int		returned_cases(char *line)
+{
+	if (!line)
+		return (0);
+	if ((ft_strchr(line, '#') && !ft_strstr(line, "##")) || ft_strstr(line,
+													"###"))
+		return (0);
+	if (strstr(line, "##") &&
+		(!ft_strstr(line, "start") && !ft_strstr(line, "end")))
+		return (0);
+	return (1);
+}
+
+void	clear_file(t_parameters *params, char *line)
 {
 	char		**tmp;
 	int			index;
 
-	if (!line)
-		return ;
-	if ((ft_strchr(line, '#') && !ft_strstr(line, "##")) || ft_strstr(line,
-													"###"))
-		return ;
-	if (strstr(line, "##") &&
-		(!ft_strstr(line, "start") && !ft_strstr(line, "end")))
+	if (!returned_cases(line))
 		return ;
 	index = -1;
 	params->file_line += 1;
@@ -44,63 +51,6 @@ void		clear_file(t_parameters *params, char *line)
 	params->file[params->file_line - 1] = NULL;
 }
 
-int		parsing_holder(t_parameters *params)
-{
-	int			index;
-	char		**split;
-	int			checker;
-
-	checker = 0;
-	if (params->file[0] && !ft_strchr(params->file[0], ' '))
-		params->nbr_ants = ft_atoi(params->file[0]);
-	if (params->nbr_ants <= 0)
-	{
-		ft_putstr("ERROR");
-		exit(1);
-	}
-	index = 0;
-	while (params->file[++index])
-	{
-		if (params->file[index][0] == '#' && ft_strstr(params->file[index], "start"))
-		{
-			checker += 1;
-			if (params->file[index + 1] &&
-					!ft_strchr(params->file[index + 1], ' '))
-				return (0);
-			else
-			{
-				split = ft_strsplit(params->file[index + 1], ' ');
-				params->start_name = split[0];
-				ft_strdel(&split[1]);
-				ft_strdel(&split[2]);
-				ft_memdel((void **)&split);
-				if (!params->start_name)
-					return (0);
-			}
-		}
-		if (params->file[index][0] == '#' && ft_strstr(params->file[index], "end"))
-		{
-			checker += 1;
-			if (params->file[index + 1] &&
-					!ft_strchr(params->file[index + 1], ' '))
-				return (0);
-			else
-			{
-				split = ft_strsplit(params->file[index + 1], ' ');
-				params->end_name = split[0];
-				ft_strdel(&split[1]);
-				ft_strdel(&split[2]);
-				ft_memdel((void **)&split);
-				if (!params->end_name)
-					return (0);
-			}
-		}
-	}
-	if (checker != 2)
-		return (0);
-	return (1);
-}
-
 void	check_line(char *line)
 {
 	int		index;
@@ -113,10 +63,23 @@ void	check_line(char *line)
 			if (!ft_isascii(line[index]))
 			{
 				ft_putendl("Error");
-				exit (1);
+				exit(1);
 			}
 		}
 	}
+}
+
+void	end(t_parameters *params)
+{
+	fill_matrice(params, fill_list(params));
+	resolve_tnl(params);
+	if (!params->nbr_tnl)
+	{
+		ft_putendl("There is no way i can find!");
+		exit(1);
+	}
+	ants_way(params);
+	leaks_holder(params);
 }
 
 int		main(void)
@@ -143,15 +106,6 @@ int		main(void)
 		ft_putendl("Error");
 		exit(1);
 	}
-	fill_matrice(&params, fill_list(&params));
-	resolve_tnl(&params);
-	if (!params.nbr_tnl)
-	{
-		ft_putendl("There is no way i can find!");
-		exit(1);
-	}
-	ants_way(&params);
-	leaks_holder(&params);
-//	while (1)
-//		;
+	end(&params);
+	return (0);
 }

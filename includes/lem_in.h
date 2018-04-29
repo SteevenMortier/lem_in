@@ -6,7 +6,7 @@
 /*   By: smortier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/25 11:14:47 by smortier          #+#    #+#             */
-/*   Updated: 2018/03/25 11:14:51 by smortier         ###   ########.fr       */
+/*   Updated: 2018/04/29 11:40:44 by smortier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 # define LEM_IN_H
 
-# include "libft/libft.h"
+# include "../libft/libft.h"
 
-# include "libft/get_next_line.h"
+# include "../libft/get_next_line.h"
 
-# include "ft_printf/ft_printf.h"
+# include "../ft_printf/ft_printf.h"
 
 # include <stdio.h>
 
@@ -26,9 +26,9 @@
 
 # include <unistd.h>
 
-#define INF 42424242
+# define INF 42424242
 
-typedef struct			s_nodes
+typedef struct	s_nodes
 {
 	int				id;
 	int				shots;
@@ -37,26 +37,25 @@ typedef struct			s_nodes
 	int				pos_y;
 	struct s_nodes	*nxt;
 	struct s_nodes	*nxt_mat;
-}						t_nodes;
+}				t_nodes;
 
-typedef struct			s_pile
+typedef struct	s_pile
 {
 	int				parent;
 	t_nodes			*bgn;
 	t_nodes			*end;
-}
-		t_pile;
+}				t_pile;
 
-typedef struct			s_antparams
+typedef struct	s_antparams
 {
 	int					ant;
 	int					tnl_id;
 	int					index_tnl;
 	int					index_start;
 	struct s_antparams	*nxt;
-}						t_antparams;
+}				t_antparams;
 
-typedef struct			s_tunnel
+typedef struct	s_tunnel
 {
 	int				id;
 	int				diff;
@@ -64,9 +63,9 @@ typedef struct			s_tunnel
 	int				number_ants;
 	int				*path;
 	struct s_tunnel	*nxt;
-}						t_tunnel;
+}				t_tunnel;
 
-typedef struct			s_parameters
+typedef struct	s_parameters
 {
 	int			diff_tnl;
 	int			nbr_ants;
@@ -84,36 +83,36 @@ typedef struct			s_parameters
 	t_pile		*pile;
 	t_tunnel	*tnl;
 	t_antparams	*ants;
-}						t_parameters;
+}				t_parameters;
 
-t_nodes		*get_node(t_parameters *params, char *name);
+t_nodes			*get_node(t_parameters *params, char *name);
 
-t_nodes		*get_node_by_id(t_parameters *params, int id_tf);
+t_nodes			*get_node_by_id(t_parameters *params, int id_tf);
 
-int		fill_list(t_parameters *params);
+int				fill_list(t_parameters *params);
 
-void	fill_matrice(t_parameters *params, int index);
+void			fill_matrice(t_parameters *params, int index);
 
-void	resolve_tnl(t_parameters *params);
+void			resolve_tnl(t_parameters *params);
 
-void		leaks_holder(t_parameters *params);
+void			leaks_holder(t_parameters *params);
 
-void		reset_matrice(t_parameters *params, int *tnl, int for_tnl);
+void			reset_matrice(t_parameters *params, int *tnl, int for_tnl);
 
-int			check_if_needed(t_parameters *params);
+int				check_if_needed(t_parameters *params);
 
-void		ants_way(t_parameters *params);
+void			ants_way(t_parameters *params);
 
-t_tunnel	*create_tunnel(t_parameters *params, int lenhgt, int *tnl);
+t_tunnel		*create_tunnel(t_parameters *params, int lenhgt, int *tnl);
 
-char	*get_roomname_by_id(t_parameters *params, int id, int index);
+char			*get_roomname_by_id(t_parameters *params, int id, int index);
 
-t_antparams	*new_ants(t_parameters *params, int ant_nbr);
+t_antparams		*create_ants(t_parameters *params, int ant_nbr);
 
-t_antparams	*create_ants(t_parameters *params, int ant_nbr);
+void			init_tnl(t_parameters *params);
 
-void	init_tnl(t_parameters *params);
+void			get_ants_by_tnl(t_parameters *params);
 
-void	get_ants_by_tnl(t_parameters *params);
+int				parsing_holder(t_parameters *params);
 
 #endif

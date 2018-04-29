@@ -6,13 +6,13 @@
 /*   By: smortier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/29 09:55:53 by smortier          #+#    #+#             */
-/*   Updated: 2018/04/29 09:55:54 by smortier         ###   ########.fr       */
+/*   Updated: 2018/04/29 11:40:11 by smortier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_antparams	*new_ants(t_parameters *params, int ant_nbr)
+t_antparams	*new_ants(int ant_nbr)
 {
 	t_antparams	*new_ants;
 
@@ -32,7 +32,7 @@ t_antparams	*create_ants(t_parameters *params, int ant_nbr)
 
 	if (params->ants == NULL)
 	{
-		tmp = new_ants(params, ant_nbr);
+		tmp = new_ants(ant_nbr);
 		return (tmp);
 	}
 	else
@@ -41,7 +41,7 @@ t_antparams	*create_ants(t_parameters *params, int ant_nbr)
 		save = tmp;
 		while (tmp->nxt)
 			tmp = tmp->nxt;
-		tmp->nxt = new_ants(params, ant_nbr);
+		tmp->nxt = new_ants(ant_nbr);
 		return (save);
 	}
 }

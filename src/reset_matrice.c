@@ -6,13 +6,13 @@
 /*   By: smortier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 11:43:06 by smortier          #+#    #+#             */
-/*   Updated: 2018/04/22 11:43:08 by smortier         ###   ########.fr       */
+/*   Updated: 2018/04/29 11:39:08 by smortier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_tunnel	*new_tunnel(t_parameters *params, int lenght, int *tnl)
+t_tunnel	*new_tunnel(int lenght, int *tnl)
 {
 	t_tunnel	*new_tunnel;
 	int			index;
@@ -39,7 +39,7 @@ t_tunnel	*create_tunnel(t_parameters *params, int lenhgt, int *tnl)
 
 	if (params->tnl == NULL)
 	{
-		tmp = new_tunnel(params, lenhgt, tnl);
+		tmp = new_tunnel(lenhgt, tnl);
 		return (tmp);
 	}
 	else
@@ -48,7 +48,7 @@ t_tunnel	*create_tunnel(t_parameters *params, int lenhgt, int *tnl)
 		save = tmp;
 		while (tmp->nxt)
 			tmp = tmp->nxt;
-		tmp->nxt = new_tunnel(params, lenhgt, tnl);
+		tmp->nxt = new_tunnel(lenhgt, tnl);
 		return (save);
 	}
 }

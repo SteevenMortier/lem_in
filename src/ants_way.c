@@ -6,7 +6,7 @@
 /*   By: smortier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 08:39:48 by smortier          #+#    #+#             */
-/*   Updated: 2018/04/22 08:39:50 by smortier         ###   ########.fr       */
+/*   Updated: 2018/04/29 11:39:30 by smortier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ void	print(t_parameters *params, t_antparams *ants, int start)
 									ants->tnl_id, ants->index_tnl)))
 	{
 		ft_printf("\e[38;5;154mL%d-\e[38;5;166m%s\e[0m ", ants->ant,
-				  get_roomname_by_id(params, ants->tnl_id, ants->index_tnl));
+				get_roomname_by_id(params, ants->tnl_id, ants->index_tnl));
 		ants->index_tnl = 0;
 		params->nbr_ants -= 1;
 	}
 	if (ants->index_start == start)
 		ants->index_tnl += 1;
 	if (ants->index_tnl != 0 && ft_strcmp(get_roomname_by_id(params,
-										 ants->tnl_id, 1), params->end_name))
+										ants->tnl_id, 1), params->end_name))
 	{
 		ft_printf("\e[38;5;154mL%d-\e[38;5;166m%s\e[0m ", ants->ant,
 				get_roomname_by_id(params, ants->tnl_id, ants->index_tnl));
@@ -96,23 +96,6 @@ void	final_print(t_parameters *params)
 		while (ants)
 		{
 			print(params, ants, start);
-//			if (!ft_strcmp(params->end_name, get_roomname_by_id(params,
-//									ants->tnl_id, ants->index_tnl)))
-//			{
-//				ft_printf("\e[38;5;154mL%d-\e[38;5;166m%s\e[0m ", ants->ant,
-//					get_roomname_by_id(params, ants->tnl_id, ants->index_tnl));
-//				ants->index_tnl = 0;
-//				params->nbr_ants -= 1;
-//			}
-//			if (ants->index_start == start)
-//				ants->index_tnl += 1;
-//			if (ants->index_tnl != 0 && ft_strcmp(get_roomname_by_id(params,
-//										ants->tnl_id, 1), params->end_name))
-//			{
-//				ft_printf("\e[38;5;154mL%d-\e[38;5;166m%s\e[0m ", ants->ant,
-//					get_roomname_by_id(params, ants->tnl_id, ants->index_tnl));
-//				ants->index_tnl++;
-//			}
 			ants = ants->nxt;
 		}
 		start++;
@@ -123,7 +106,6 @@ void	final_print(t_parameters *params)
 void	ants_way(t_parameters *params)
 {
 	t_tunnel	*tmp;
-	int			index;
 	int			ants;
 
 	ants = 0;
